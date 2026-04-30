@@ -1,4 +1,4 @@
-# wordpress-docker
+# WordPress Deployment with Docker Compose
 
 ## Table of Contents
 - Description
@@ -11,18 +11,18 @@
 
 ## Description
 
-This project provides a minimal Docker Compose setup for running WordPress with a MariaDB database.  
-The configuration follows best practices regarding security, environment variables, and persistence.
+This project provides a simple containerized setup for running WordPress with a MariaDB database using Docker Compose.  
+It demonstrates how to configure services, environment variables, and persistent storage in a secure and reproducible way.
 
 ---
 
 ## Features
 
-- WordPress and MariaDB run in separate containers
+- Two-container setup (WordPress + MariaDB)
 - Persistent database storage using Docker volumes
-- Configuration via environment variables
+- Environment-based configuration
 - No sensitive data stored in the repository
-- Simple and reproducible setup
+- Easy setup and execution with Docker Compose
 
 ---
 
@@ -33,7 +33,7 @@ cp .env.example .env
 docker compose up -d
 ```
 
-Open in browser:
+Open:
 
 ```
 http://localhost:8080
@@ -50,15 +50,15 @@ http://localhost:8080
 
 ### Setup
 
-Clone the repository and navigate into the project directory.
-
-Create a local `.env` file based on the template:
+1. Clone the repository
+2. Navigate into the project directory
+3. Create a `.env` file:
 
 ```bash
 cp .env.example .env
 ```
 
-Edit the `.env` file and provide your own values:
+4. Edit `.env` and set your values:
 
 ```env
 MARIADB_USER=your_user
@@ -75,19 +75,19 @@ WORDPRESS_ENABLE_HTTPS=no
 
 ## Usage
 
-### Start services
+### Start
 
 ```bash
 docker compose up -d
 ```
 
-### Check status
+### Status
 
 ```bash
 docker compose ps
 ```
 
-### Access WordPress
+### Access
 
 ```
 http://localhost:8080
@@ -99,13 +99,13 @@ http://localhost:8080
 http://localhost:8080/wp-login.php
 ```
 
-If no administrator user exists, create one using:
+### Create Admin User (if needed)
 
 ```bash
 docker compose exec wordpress bash -c "wp user create admin admin@example.com --role=administrator --user_pass='your_password' --path=/opt/bitnami/wordpress"
 ```
 
-### Stop services
+### Stop
 
 ```bash
 docker compose down
@@ -115,6 +115,6 @@ docker compose down
 
 ## Notes
 
-- The `.env` file is not committed to the repository
-- All sensitive configuration is handled via environment variables
-- Database data is stored persistently in a Docker volume
+- `.env` is not committed to the repository
+- Sensitive data is managed via environment variables
+- Database data is stored in a Docker volume (`db_data`)
