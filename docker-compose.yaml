@@ -2,11 +2,8 @@ services:
   db:
     image: bitnami/mariadb:latest
     restart: unless-stopped
-    environment:
-      MARIADB_DATABASE: ${MARIADB_DATABASE:-bitnami_wordpress}
-      MARIADB_USER: ${MARIADB_USER}
-      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
-      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    env_file:
+      - .env
     volumes:
       - db_data:/bitnami/mariadb
     networks:
@@ -17,6 +14,8 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+    env_file:
+      - .env
     ports:
       - "${WORDPRESS_PORT:-8080}:8080"
     environment:
@@ -25,8 +24,6 @@ services:
       WORDPRESS_DATABASE_NAME: ${MARIADB_DATABASE:-bitnami_wordpress}
       WORDPRESS_DATABASE_USER: ${MARIADB_USER}
       WORDPRESS_DATABASE_PASSWORD: ${MARIADB_PASSWORD}
-      WORDPRESS_BLOG_NAME: ${WORDPRESS_BLOG_NAME:-My WordPress Site}
-      WORDPRESS_ENABLE_HTTPS: ${WORDPRESS_ENABLE_HTTPS:-no}
     networks:
       - wordpress_net
 
